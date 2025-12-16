@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- templates/home.html -->
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- Заголовок страницы -->
+        <h1 class="mb-4">Добро пожаловать в Flask Приложение!</h1>
+
+        <!-- Информационный текст -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">О приложении</h5>
+                <p class="card-text">
+                    Это демонстрационное Flask приложение с системой аутентификации и авторизации.
+                    Вы можете зарегистрироваться, войти в систему и управлять своим профилем.
+                </p>
+
+                <!-- Показать информацию о пользователе, если он аутентифицирован -->
+                {% if current_user.is_authenticated %}
+                    <div class="alert alert-success mt-3">
+                        <strong>Вы вошли как:</strong> {{ current_user.username }}<br>
+                        <strong>Email:</strong> {{ current_user.email }}
+                    </div>
+                {% else %}
+                    <!-- Призыв к действию для неаутентифицированных пользователей -->
+                    <div class="alert alert-info mt-3">
+                        <strong>Для начала работы:</strong> Зарегистрируйтесь или войдите в систему.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

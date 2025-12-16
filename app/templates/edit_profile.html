@@ -1,10 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- templates/edit_profile.html -->
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Редактировать профиль{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <!-- Заголовок страницы -->
+        <h1 class="mb-4">Редактировать профиль</h1>
+
+        <!-- Карточка с формой редактирования -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Обновление информации</h5>
+            </div>
+            <div class="card-body">
+                <!-- Форма редактирования профиля -->
+                <form method="POST" action="">
+                    <!-- CSRF токен для защиты от атак -->
+                    {{ form.hidden_tag() }}
+
+                    <!-- Поле для имени пользователя -->
+                    <div class="form-group mb-3">
+                        {{ form.username.label(class="form-label") }}
+
+                        <!-- Поле ввода с проверкой на ошибки -->
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                <!-- Вывод ошибок валидации -->
+                                {% for error in form.username.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.username(class="form-control") }}
+                        {% endif %}
+
+                        <!-- Подсказка для пользователя -->
+                        <small class="form-text text-muted">
+                            Имя пользователя должно быть от 2 до 20 символов.
+                        </small>
+                    </div>
+
+                    <!-- Поле для email -->
+                    <div class="form-group mb-3">
+                        {{ form.email.label(class="form-label") }}
+
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control") }}
+                        {% endif %}
+                    </div>
+
+                    <!-- Поле для текущего пароля -->
+                    <div class="form-group mb-3">
+                        {{ form.current_password.label(class="form-label") }}
+
+                        {% if form.current_password.errors %}
+                            {{ form.current_password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.current_password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.current_password(class="form-control") }}
+                        {% endif %}
+
+                        <small class="form-text text-muted">
+                            Требуется для подтверждения изменений.
+                        </small>
+                    </div>
+
+                    <!-- Поле для нового пароля -->
+                    <div class="form-group mb-3">
+                        {{ form.new_password.label(class="form-label") }}
+
+                        {% if form.new_password.errors %}
+                            {{ form.new_password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.new_password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.new_password(class="form-control") }}
+                        {% endif %}
+
+                        <small class="form-text text-muted">
+                            Оставьте пустым, если не хотите менять пароль.
+                        </small>
+                    </div>
+
+                    <!-- Поле для подтверждения нового пароля -->
+                    <div class="form-group mb-4">
+                        {{ form.confirm_new_password.label(class="form-label") }}
+
+                        {% if form.confirm_new_password.errors %}
+                            {{ form.confirm_new_password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.confirm_new_password.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.confirm_new_password(class="form-control") }}
+                        {% endif %}
+                    </div>
+
+                    <!-- Кнопка отправки формы -->
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-primary") }}
+
+                        <!-- Кнопка отмены -->
+                        <a href="{{ url_for('account') }}" class="btn btn-secondary">
+                            Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
