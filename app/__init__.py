@@ -54,17 +54,14 @@ def create_app():
     # Импортируем модели и маршруты после создания приложения
     # чтобы избежать циклических импортов
     from app.models import User  # Модель пользователя
-    from app.routes import routes  # Маршруты приложения
-
-    # Регистрируем blueprint с маршрутами (если используется)
-    # app.register_blueprint(routes)
 
     # Создаем таблицы в базе данных при запуске приложения
     with app.app_context():
         db.create_all()  # Создаем все таблицы, определенные в моделях
 
-    # Импортируем и регистрируем маршруты
-    from app import routes
-    # ВАЖНО: Этот импорт должен быть после создания приложения
+    # Регистрируем маршруты приложения
+    from app.routes import register_routes
+    app = register_routes(app)  # Регистрируем все маршруты
 
     return app  # Возвращаем созданное приложение
+
